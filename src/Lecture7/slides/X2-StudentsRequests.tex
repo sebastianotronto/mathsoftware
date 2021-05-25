@@ -1,0 +1,309 @@
+\documentclass[11pt]{beamer}
+\usetheme{Madrid}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+
+\usepackage{svg}
+\usepackage{color}
+\usepackage{listings}
+\usepackage{mathtools}
+\usepackage{tikz-cd}
+\usepackage{adjustbox}
+
+\definecolor{myblue}{rgb}{0,0,0.5}
+\lstset{
+	language=Python,
+	tabsize=4,
+	basicstyle=\footnotesize,
+	keywordstyle=\bf\color{myblue},
+	commentstyle=\it\color{gray},
+	numbers=left,
+	numbersep=3pt,
+	numberstyle=\tiny\color{gray},
+}
+
+\author[\texttt{sebastiano.tronto@uni.lu}]{Sebastiano Tronto}
+\title[Students requests]%
+{Students requests}
+\logo{\includegraphics[scale=0.1]{img/unilu.jpg}} 
+%\institute{University of Luxembourg} 
+
+\date{2021-05-21} 
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}[plain]
+	\begin{center} {\Huge More cryptography} \end{center}
+\end{frame}
+
+\begin{frame}{Cryptography}
+	What we have seen:
+
+	\vspace{0.3cm}
+	\begin{itemize}
+		\item \textbf{RSA:}
+			sending messages using a private key / public key pair
+		\item \textbf{Flip-a-coin:}
+			cryptographic ``proof'' that the opponent is not cheating
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Cryptography}
+	\begin{itemize}
+		\item Rely on integer factorization being hard
+
+			\vspace{0.3cm}
+			\textbf{Example:} the best-known factorization algorithm
+			(\href{https://en.wikipedia.org/wiki/General\_number\_field\_sieve}%
+			{\emph{General number field sieve}}) has complexity
+			\begin{align*}
+				\sim O\left(
+					e^{\sqrt[3]{\frac{64}{9}\log_2n\cdot(\log_2\log_2n)^2}}
+				\right)
+			\end{align*}
+
+			Factoring a number with $300$ digits:
+			\begin{itemize}
+				\item Your laptop: $10^{13}$ billion years
+				\item Best supercomputer: $13$ billion years
+					(age of the universe)
+			\end{itemize}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Symmetric and asymmetric cryptography}
+	\begin{itemize}
+		\item Our examples are \emph{asymmetric}: different public/private keys
+		\item Safe against eavesdroppers
+		\item Symmetric protocols can be faster and simpler, but you need
+			a secure way to exchange a key
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Diffie-Hellman key exchange}
+	\begin{itemize}
+		\item Generate a ``password'' without communicating it directly
+		\item It can then be used for symmetric cryptography
+		\item Based on a different hard problem:
+			\href{https://en.wikipedia.org/wiki/Discrete\_logarithm}%
+			{\emph{discrete logarithm}}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Diffie-Hellman key exchange}
+	\begin{itemize}
+		\item Alice and Bob agree on a prime number $p$ and an integer $g$
+		\item Alice picks an integer $a$ and sends $(g^a\bmod p)$ to Bob
+		\item Bob picks an integer $b$ and sends $(g^b\bmod p)$ to Alice
+		\item Alice can compute $(g^b)^a\bmod p$ and Bob can compute
+			$(g^a)^b\bmod p$. This is their shared secret (key).
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Diffie-Hellman with colors (from Wikipedia)}
+	\begin{center}\includesvg[scale=0.45]{img/DH}\end{center}
+\end{frame}
+
+\begin{frame}{Diffie-Hellman key exchange}
+	\begin{itemize}
+		\item Knowing $h$ and $a$, it is hard to find $g$ such that
+			$g^a \bmod p =h$ (discrete logarithm problem)
+		\item Very simple, many variants
+		\item Any group can be used, e.g. Elliptic Curves (see
+\href{https://en.wikipedia.org/wiki/Elliptic-curve_Diffie\%E2\%80\%93Hellman}%
+			{Wikipedia: elliptic-curve Diffie-Hellman})
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}[plain]
+	\begin{center} {\Huge Numerical methods for PDEs} \end{center}
+\end{frame}
+
+\begin{frame}{Solving partial differential equations}
+	\begin{itemize}
+		\item Very, very hard
+		\item Very important in practical applications (physics and such)
+		\item Approximations are necessary, might as well use numerical methods
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Numerical methods for ODEs}
+	\begin{block}{Problem}
+		Given $f(x,y)$, $x_0$ and $y_0$, find an approximation
+		for $y(x)$ such that
+		\begin{align*}
+			\begin{cases}
+				y'(x) = f(x, y(x))\\
+				y(x_0) =y_0
+			\end{cases}
+		\end{align*}
+	\end{block}
+
+	\begin{block}{Approximation}
+		We can describe $y(x)$ in an interval $[x_0,x_1]$ by giving the
+		(approximate) values $y(s_0)$, \dots, $y(s_n)$ for many
+		values of $s_i\in [x_0, x_1]$.
+	\end{block}
+\end{frame}
+
+\begin{frame}{Euler's method}
+	\begin{block}{Idea}
+		For $h$ small
+		\begin{align*}
+			y'(x)\approx\frac{y(x+h)-y(x)}{h}
+		\end{align*}
+		which implies
+		\begin{align*}
+			y(x+h) \approx y(x) + h\cdot f(x, y(x))
+		\end{align*}
+	\end{block}
+\end{frame}
+
+\begin{frame}{Euler's method}
+	\begin{block}{Algorithm}
+		\textbf{Input:} the data $f(x,y)$, $x_0$, $y_0$ and $x_1$ describing
+			the problem and the desired range for the solution.
+
+		\vspace{0.3cm}
+		\textbf{Output:} $x_0=s_0 < s_1 < \dots < s_n=x_1$ and
+			$y_0, \dots, y_n$ such that $y_i\approx y(s_i)$.
+
+		\vspace{0.3cm}
+		\begin{enumerate}
+			\item Choose a value $n$ and let
+				$h=\frac{x_1-x_0}{n}$ and $s_i=x_0+ih$
+			\item For $i=0,\dots, n-1$ compute
+				$y_{i+1}=y_i+h\cdot f(s_i, y_i)$
+			\item Return $s_0, \dots, s_n$ and $y_0, \dots, y_n$
+		\end{enumerate}
+	\end{block}
+\end{frame}
+
+\begin{frame}{Euler's method}
+	\begin{itemize}
+		\item Very simple and fast
+		\item Generalization for higher-order equations: Runge-Kutta methods
+		\item A similar idea works for some PDEs
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{The heat equation (PDE)}
+	\begin{align*}
+		\frac{\partial u}{\partial t} = \frac{\partial^2 u}{\partial x_1^2} +
+		\frac{\partial^2 u}{\partial x_2^2} + \cdots +
+		\frac{\partial^2 u}{\partial x_n^2}
+	\end{align*}
+	
+	Where
+	\[u(x_1,x_2,\dots,x_n,t): \mathbb R^n\times \mathbb R_+\to \mathbb R\]
+	describes the quantity of heat at the point $(x_1,\dots x_n)$ at time $t$.
+
+	\vspace{0.3cm} It appears also outside thermodynamics: mathematical finance
+	(\href{https://en.wikipedia.org/wiki/Black\%E2\%80\%93Scholes\_equation}%
+	{Black-Scholes equation}), quantum mechanics
+	(\href{https://en.wikipedia.org/wiki/Schr\%C3\%B6dinger\_equation}%
+	{Schrödinger equation}), image analysis\dots
+\end{frame}
+
+\begin{frame}{A simple case ($n=1$, in $[0,1]^2$)}
+	\begin{block}{Problem}
+		Given $u_0(t)$, $u_1(t)$ and $u^0(x)$, find an approximation
+		for $u(x,t)$ such that
+		\begin{align*}
+			\begin{cases}
+				\frac{\partial u}{\partial t} =
+					\frac{\partial^2 u}{\partial x^2} \\
+				u(0,t) = u_{(0)}(t) \quad \text{(boundary condition)}\\
+				u(1,t) = u_{(1)}(t) \quad \text{(boundary condition)}\\
+				u(x,0) = u^0(x) \quad \text{(initial condition)}
+			\end{cases}
+		\end{align*}
+	\end{block}
+
+	\begin{block}{Approximation}
+		Values $u_i^j\approx u(s_i, r^j)$ for
+		$(s_i,r^j)\in [0,1]\times [0,1]$
+	\end{block}
+\end{frame}
+
+\begin{frame}{Idea}
+	For $k$ small:
+	\begin{align*}
+		\frac{\partial u(x,t)}{\partial t} \approx \frac{u(x,t+k)-u(x,t)}{k}\\
+	\end{align*}
+	For $h$ small (left limit + right limit):
+	\begin{align*}
+		\frac{\partial^2 u(x,t)}{\partial x^2} &\approx
+			\frac{\partial}{\partial x}\left(
+				\frac{u(x,t) - u(x-h,t)}{h}
+			\right)\\
+		&\approx \frac1h\left(
+			\frac{\partial u(x,t)}{\partial x} -
+			\frac{\partial u(x-h,t)}{\partial x}
+		\right)\\
+		&\approx \frac1h\left(
+			\frac{u(x+h,t) - u(x,t)}{h} - \frac{u(x,t)-u(x-h,t)}{h}
+		\right)\\
+		&\approx \frac{u(x+h,t)-2u(x,t)+u(x-h,t)}{h^2}
+	\end{align*}
+\end{frame}
+
+\begin{frame}{Idea}
+	From the equation
+	\begin{align*}
+		\frac{u_i^{j+1}-u_i^j}{k}= \frac{u_{i+1}^j-2u_{i}^j+u_{i-1}^j}{h^2}
+	\end{align*}
+	we find the formula
+	\begin{align*}
+		u_i^{j+1} = \frac{k}{h^2}\left(u_{i+1}^j - 2u_i^j + u_{i-1}^j\right)
+			 + u_i^j
+	\end{align*}
+\end{frame}
+
+\begin{frame}{Finite difference method for the heat equation}
+	\begin{block}{Algorithm}
+		\textbf{Input:} $u_{(0)}^j$, $u_{(1)}^j$ (boundary)
+			and $u_i^0$ (initial).
+
+		\vspace{0.3cm}
+		\textbf{Output:} values $u_i^j$ approximating a solution.
+
+		\vspace{0.3cm}
+		\begin{enumerate}
+			\item Let  $m=\operatorname{len}(u_0)-1$,
+				$n=\operatorname{len}(u^0)-1$ and $k=1/m$, $h=1/n$
+				%\begin{align*}
+				%	\begin{array}{cccc}
+				%		k=\frac{t_1-t_0}{m}, & h=\frac{x_1-x_0}{n}, &
+				%		r^j = t_0 +jk, & s_i = x_0+ih
+				%	\end{array}
+				%\end{align*}
+			\item For $j=0,\dots, m-1$ do the following:
+				\begin{itemize}
+					\item For $i=1,\dots, n-1$ compute
+						\begin{align*}
+							u_i^{j+1} = \frac{k}{h^2}\left(u_{i+1}^j - 
+							             2u_i^j + u_{i-1}^j\right) + u_i^j
+						\end{align*}
+				\end{itemize}
+			\item Return the $u_i^j$
+		\end{enumerate}
+	\end{block}
+\end{frame}
+
+\begin{frame}{Other PDEs}
+	\begin{itemize}
+		\item In general, there is no generic method
+		\item You might need to write specific code for your equation
+		\item Some packages exists
+			(e.g. \href{https://wiki.octave.org/Fem-fenics}{fem-fenics} for
+			\href{https://www.gnu.org/software/octave/index}{Gnu Octave})
+	\end{itemize}
+\end{frame}
+
+\end{document}

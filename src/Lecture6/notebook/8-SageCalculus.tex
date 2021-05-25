@@ -1,0 +1,1456 @@
+\documentclass[11pt]{article}
+
+    \usepackage[breakable]{tcolorbox}
+    \usepackage{parskip} % Stop auto-indenting (to mimic markdown behaviour)
+    
+    \usepackage{iftex}
+    \ifPDFTeX
+    	\usepackage[T1]{fontenc}
+    	\usepackage{mathpazo}
+    \else
+    	\usepackage{fontspec}
+    \fi
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % Maintain compatibility with old templates. Remove in nbconvert 6.0
+    \let\Oldincludegraphics\includegraphics
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionFormat{nocaption}{}
+    \captionsetup{format=nocaption,aboveskip=0pt,belowskip=0pt}
+
+    \usepackage[Export]{adjustbox} % Used to constrain images to a maximum size
+    \adjustboxset{max size={0.9\linewidth}{0.9\paperheight}}
+    \usepackage{float}
+    \floatplacement{figure}{H} % forces figures to be placed at the correct location
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range
+    \makeatletter % fix for grffile with XeLaTeX
+    \def\Gread@@xetex#1{%
+      \IfFileExists{"\Gin@base".bb}%
+      {\Gread@eps{\Gin@base.bb}}%
+      {\Gread@@xetex@aux#1}%
+    }
+    \makeatother
+
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    % The default LaTeX title has an obnoxious amount of whitespace. By default,
+    % titling removes some of it. It also provides customization options.
+    \usepackage{titling}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    \usepackage{mathrsfs}
+    
+
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+    \definecolor{ansi-default-inverse-fg}{HTML}{FFFFFF}
+    \definecolor{ansi-default-inverse-bg}{HTML}{000000}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatibility definitions
+    \def\gt{>}
+    \def\lt{<}
+    \let\Oldtex\TeX
+    \let\Oldlatex\LaTeX
+    \renewcommand{\TeX}{\textrm{\Oldtex}}
+    \renewcommand{\LaTeX}{\textrm{\Oldlatex}}
+    % Document parameters
+    % Document title
+    \title{Calculus and more with SageMath}
+    \author{Sebastiano Tronto - \texttt{sebastiano.tronto@uni.lu}}
+    \date{2021-05-07}
+    
+    
+    
+    
+    
+% Pygments definitions
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % For linebreaks inside Verbatim environment from package fancyvrb. 
+    \makeatletter
+        \newbox\Wrappedcontinuationbox 
+        \newbox\Wrappedvisiblespacebox 
+        \newcommand*\Wrappedvisiblespace {\textcolor{red}{\textvisiblespace}} 
+        \newcommand*\Wrappedcontinuationsymbol {\textcolor{red}{\llap{\tiny$\m@th\hookrightarrow$}}} 
+        \newcommand*\Wrappedcontinuationindent {3ex } 
+        \newcommand*\Wrappedafterbreak {\kern\Wrappedcontinuationindent\copy\Wrappedcontinuationbox} 
+        % Take advantage of the already applied Pygments mark-up to insert 
+        % potential linebreaks for TeX processing. 
+        %        {, <, #, %, $, ' and ": go to next line. 
+        %        _, }, ^, &, >, - and ~: stay at end of broken line. 
+        % Use of \textquotesingle for straight quote. 
+        \newcommand*\Wrappedbreaksatspecials {% 
+            \def\PYGZus{\discretionary{\char`\_}{\Wrappedafterbreak}{\char`\_}}% 
+            \def\PYGZob{\discretionary{}{\Wrappedafterbreak\char`\{}{\char`\{}}% 
+            \def\PYGZcb{\discretionary{\char`\}}{\Wrappedafterbreak}{\char`\}}}% 
+            \def\PYGZca{\discretionary{\char`\^}{\Wrappedafterbreak}{\char`\^}}% 
+            \def\PYGZam{\discretionary{\char`\&}{\Wrappedafterbreak}{\char`\&}}% 
+            \def\PYGZlt{\discretionary{}{\Wrappedafterbreak\char`\<}{\char`\<}}% 
+            \def\PYGZgt{\discretionary{\char`\>}{\Wrappedafterbreak}{\char`\>}}% 
+            \def\PYGZsh{\discretionary{}{\Wrappedafterbreak\char`\#}{\char`\#}}% 
+            \def\PYGZpc{\discretionary{}{\Wrappedafterbreak\char`\%}{\char`\%}}% 
+            \def\PYGZdl{\discretionary{}{\Wrappedafterbreak\char`\$}{\char`\$}}% 
+            \def\PYGZhy{\discretionary{\char`\-}{\Wrappedafterbreak}{\char`\-}}% 
+            \def\PYGZsq{\discretionary{}{\Wrappedafterbreak\textquotesingle}{\textquotesingle}}% 
+            \def\PYGZdq{\discretionary{}{\Wrappedafterbreak\char`\"}{\char`\"}}% 
+            \def\PYGZti{\discretionary{\char`\~}{\Wrappedafterbreak}{\char`\~}}% 
+        } 
+        % Some characters . , ; ? ! / are not pygmentized. 
+        % This macro makes them "active" and they will insert potential linebreaks 
+        \newcommand*\Wrappedbreaksatpunct {% 
+            \lccode`\~`\.\lowercase{\def~}{\discretionary{\hbox{\char`\.}}{\Wrappedafterbreak}{\hbox{\char`\.}}}% 
+            \lccode`\~`\,\lowercase{\def~}{\discretionary{\hbox{\char`\,}}{\Wrappedafterbreak}{\hbox{\char`\,}}}% 
+            \lccode`\~`\;\lowercase{\def~}{\discretionary{\hbox{\char`\;}}{\Wrappedafterbreak}{\hbox{\char`\;}}}% 
+            \lccode`\~`\:\lowercase{\def~}{\discretionary{\hbox{\char`\:}}{\Wrappedafterbreak}{\hbox{\char`\:}}}% 
+            \lccode`\~`\?\lowercase{\def~}{\discretionary{\hbox{\char`\?}}{\Wrappedafterbreak}{\hbox{\char`\?}}}% 
+            \lccode`\~`\!\lowercase{\def~}{\discretionary{\hbox{\char`\!}}{\Wrappedafterbreak}{\hbox{\char`\!}}}% 
+            \lccode`\~`\/\lowercase{\def~}{\discretionary{\hbox{\char`\/}}{\Wrappedafterbreak}{\hbox{\char`\/}}}% 
+            \catcode`\.\active
+            \catcode`\,\active 
+            \catcode`\;\active
+            \catcode`\:\active
+            \catcode`\?\active
+            \catcode`\!\active
+            \catcode`\/\active 
+            \lccode`\~`\~ 	
+        }
+    \makeatother
+
+    \let\OriginalVerbatim=\Verbatim
+    \makeatletter
+    \renewcommand{\Verbatim}[1][1]{%
+        %\parskip\z@skip
+        \sbox\Wrappedcontinuationbox {\Wrappedcontinuationsymbol}%
+        \sbox\Wrappedvisiblespacebox {\FV@SetupFont\Wrappedvisiblespace}%
+        \def\FancyVerbFormatLine ##1{\hsize\linewidth
+            \vtop{\raggedright\hyphenpenalty\z@\exhyphenpenalty\z@
+                \doublehyphendemerits\z@\finalhyphendemerits\z@
+                \strut ##1\strut}%
+        }%
+        % If the linebreak is at a space, the latter will be displayed as visible
+        % space at end of first line, and a continuation symbol starts next line.
+        % Stretch/shrink are however usually zero for typewriter font.
+        \def\FV@Space {%
+            \nobreak\hskip\z@ plus\fontdimen3\font minus\fontdimen4\font
+            \discretionary{\copy\Wrappedvisiblespacebox}{\Wrappedafterbreak}
+            {\kern\fontdimen2\font}%
+        }%
+        
+        % Allow breaks at special characters using \PYG... macros.
+        \Wrappedbreaksatspecials
+        % Breaks at punctuation characters . , ; ? ! and / need catcode=\active 	
+        \OriginalVerbatim[#1,codes*=\Wrappedbreaksatpunct]%
+    }
+    \makeatother
+
+    % Exact colors from NB
+    \definecolor{incolor}{HTML}{303F9F}
+    \definecolor{outcolor}{HTML}{D84315}
+    \definecolor{cellborder}{HTML}{CFCFCF}
+    \definecolor{cellbackground}{HTML}{F7F7F7}
+    
+    % prompt
+    \makeatletter
+    \newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
+    \makeatother
+    \newcommand{\prompt}[4]{
+        \ttfamily\llap{{\color{#2}[#3]:\hspace{3pt}#4}}\vspace{-\baselineskip}
+    }
+    
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+\begin{document}
+    
+    \maketitle
+    
+    
+
+    
+    \hypertarget{symbolic-expressions}{%
+\section{Symbolic expressions}\label{symbolic-expressions}}
+
+\textbf{Reference:}
+{[}\href{https://doc.sagemath.org/html/en/reference/calculus/sage/symbolic/expression.html}{1}{]}
+
+Last time we saw the basics of symbolic expressions: * How to define and
+manipulate symbolic expressions * How to introduce new variables (in the
+Mathematical sense) with \texttt{var()} * How to solve equations and
+inequalities * Some of the Mathematical constants that are included in
+Sage, and how to approximate them using \texttt{n()}
+
+Here are some examples to remind you of these basic things:
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{2}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{var}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{y}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{z}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{c+c1}{\PYZsh{} Define new variables (x is already defined by Sage)}
+\PY{n}{f} \PY{o}{=} \PY{n}{x}\PY{o}{\PYZca{}}\PY{l+m+mi}{2} \PY{o}{+} \PY{n}{pi}
+\PY{n}{g} \PY{o}{=} \PY{n}{y}\PY{o}{\PYZca{}}\PY{l+m+mi}{2} \PY{o}{+} \PY{n}{y} \PY{o}{\PYZhy{}} \PY{l+m+mi}{2} \PY{o}{\PYZgt{}} \PY{l+m+mi}{0}
+\PY{n+nb}{print}\PY{p}{(} \PY{n}{solve}\PY{p}{(}\PY{n}{f}\PY{o}{==}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{x}\PY{p}{)} \PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(} \PY{n}{solve}\PY{p}{(}\PY{n}{z}\PY{o}{\PYZca{}}\PY{l+m+mi}{2} \PY{o}{\PYZhy{}} \PY{n}{f}\PY{p}{,} \PY{n}{z}\PY{p}{)} \PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(} \PY{n}{solve}\PY{p}{(}\PY{n}{g}\PY{p}{,} \PY{n}{y}\PY{p}{)} \PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(} \PY{l+m+mi}{2}\PY{o}{*}\PY{n}{pi} \PY{o}{+} \PY{n}{e}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{is approximately}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{n}\PY{p}{(}\PY{l+m+mi}{2}\PY{o}{*}\PY{n}{pi} \PY{o}{+} \PY{n}{e}\PY{p}{)} \PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+[
+x == -sqrt(-pi),
+x == sqrt(-pi)
+]
+[
+z == -sqrt(pi + x\^{}2),
+z == sqrt(pi + x\^{}2)
+]
+[[y < -2], [y > 1]]
+2*pi + e is approximately 9.00146713563863
+    \end{Verbatim}
+
+    Now we will see some more details about solving equations and
+manipulating their solutions.
+
+    \hypertarget{solving-equations-and-inequalities}{%
+\subsection{Solving equations and
+inequalities}\label{solving-equations-and-inequalities}}
+
+\textbf{Reference}
+{[}\href{https://doc.sagemath.org/html/en/reference/calculus/sage/symbolic/expression.html}{1}{]}
+for the details of \texttt{solve()} and \texttt{find\_root()},
+{[}\href{https://doc.sagemath.org/html/en/reference/calculus/sage/symbolic/relation.html\#solving}{2}{]}
+for examples.
+
+Other than equations and inequalities, we can also solve systems: it is
+enough to give Sage a list of expressions and a list of variables with
+respect to which we want to solve. For example the system
+
+\begin{align*}
+    \begin{cases}
+        x + y = 2 \\
+        2x - y = 6
+    \end{cases}
+\end{align*}
+
+Can be solved as
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{40}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{solve}\PY{p}{(}\PY{p}{[}\PY{n}{x}\PY{o}{+}\PY{n}{y} \PY{o}{==} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{2}\PY{o}{*}\PY{n}{x} \PY{o}{\PYZhy{}} \PY{n}{y} \PY{o}{==} \PY{l+m+mi}{6}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{n}{x}\PY{p}{,}\PY{n}{y}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{40}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+[[x == (8/3), y == (-2/3)]]
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \textbf{Exercise.} Find the intersection of the circle of radius \(2\)
+centered in the origin and the parabula of equation \(y=x^2-2x^2+1\).
+
+    \hypertarget{the-set-of-solutions}{%
+\subsubsection{The set of solutions}\label{the-set-of-solutions}}
+
+One would expect the result of \texttt{solve()} to be a list of
+solutions, but it is actually a list of expressions (technically it is
+not a list but a different type of Python collection, but this is not so
+important)
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{37}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{solutions} \PY{o}{=} \PY{n}{solve}\PY{p}{(}\PY{n}{x}\PY{o}{\PYZca{}}\PY{l+m+mi}{2}\PY{o}{\PYZhy{}}\PY{l+m+mi}{9} \PY{o}{==} \PY{l+m+mi}{0}\PY{p}{,} \PY{n}{x}\PY{p}{)}
+\PY{n}{solutions}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{c+c1}{\PYZsh{} This is the expression \PYZsq{}x == \PYZhy{}3\PYZsq{}}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{37}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+x == -3
+\end{Verbatim}
+\end{tcolorbox}
+        
+    To read the actual solution without the \texttt{x\ ==} part you can use
+the \texttt{rhs()} or \texttt{lhs()} functions, which can be applied to
+any expression containing a relation operator (like \texttt{==},
+\texttt{\textless{}}, \texttt{\textgreater{}=}\ldots) and return the
+\emph{right hand side} and \emph{left hand side} of the expression,
+respectively
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{41}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{f} \PY{o}{=}  \PY{n}{x} \PY{o}{==} \PY{l+m+mi}{2}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{rhs:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{f}\PY{o}{.}\PY{n}{rhs}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{lhs:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{f}\PY{o}{.}\PY{n}{lhs}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+rhs: 2
+lhs: x
+    \end{Verbatim}
+
+    When you solve an inequality or a system, the set of solutions can be
+more complicated to describe. In this case the result is a list
+containing lists of expressions that have to be \texttt{True} at the
+same time. It is easier to explain with an example:
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{38}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Simple inequality:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{solve}\PY{p}{(}\PY{n}{x}\PY{o}{\PYZca{}}\PY{l+m+mi}{2}\PY{o}{\PYZhy{}}\PY{l+m+mi}{9} \PY{o}{\PYZgt{}} \PY{l+m+mi}{0}\PY{p}{,} \PY{n}{x}\PY{p}{)}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{System of inequalities:}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{solve}\PY{p}{(}\PY{p}{[}\PY{n}{x}\PY{o}{\PYZca{}}\PY{l+m+mi}{2}\PY{o}{\PYZhy{}}\PY{l+m+mi}{9} \PY{o}{\PYZgt{}} \PY{l+m+mi}{0}\PY{p}{,} \PY{n}{x} \PY{o}{\PYZlt{}} \PY{l+m+mi}{6}\PY{p}{]}\PY{p}{,} \PY{n}{x}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Simple inequality: [[x < -3], [x > 3]]
+System of inequalities:
+ [
+[3 < x, x < 6],
+[x < -3]
+]
+    \end{Verbatim}
+
+    In the last example (system of inequalities), Sage is telling us that
+the system \begin{align*}
+    \begin{cases}
+        x^2-9 > 9 \\
+        x < 6
+    \end{cases}
+\end{align*} has two solutions: * \(x\) is between \(3\) and \(6\); *
+\(x\) is less than \(-3\).
+
+Since in Sage (and in Python) expressions can have at most on relational
+operator like \texttt{\textless{}}, the first solution requires two
+expressions to be described. Hence the ``list of lists''.
+
+    \textbf{Exercise.} In the first exercise you were asked to solve a
+system of equations, but some of its solutions were complex numbers.
+Select only the real solutions and print them as pairs \((x,y)\).
+
+    When solving a system of equations (not inequalities), you can use the
+option \texttt{solution\_dict=True} to have the solutions arranged as a
+\emph{dictionary}, which is a type of Python collection that we did not
+treat in this course
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{44}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{solve}\PY{p}{(}\PY{p}{[}\PY{n}{x}\PY{o}{+}\PY{n}{y} \PY{o}{==} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{2}\PY{o}{*}\PY{n}{x} \PY{o}{\PYZhy{}} \PY{n}{y} \PY{o}{==} \PY{l+m+mi}{6}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{n}{x}\PY{p}{,}\PY{n}{y}\PY{p}{]}\PY{p}{,} \PY{n}{solution\PYZus{}dict}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{44}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+[\{x: 8/3, y: -2/3\}]
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \hypertarget{alternative-method-for-real-roots-find_root}{%
+\subsubsection{\texorpdfstring{Alternative method for real roots:
+\texttt{find\_root()}}{Alternative method for real roots: find\_root()}}\label{alternative-method-for-real-roots-find_root}}
+
+The \texttt{solve()} method is very useful when solving \emph{symbolic}
+equations, for example when you have two variables and you want to solve
+for one of them in terms of the other. However, it does not always find
+explicit solutions.
+
+When you want to find an explicit, even if approximate, solution, it can
+be better to use \texttt{find\_root()}. This function works
+\emph{numerically}, which means that it finds an approximation of the
+root. It only works for real solutions and you need to specify an
+interval where you want the root to be searched:
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{52}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{f} \PY{o}{=} \PY{n}{e}\PY{o}{\PYZca{}}\PY{n}{x} \PY{o}{+} \PY{n}{x} \PY{o}{\PYZhy{}} \PY{l+m+mi}{10}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Using solve():}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{solve}\PY{p}{(}\PY{n}{f}\PY{p}{,} \PY{n}{x}\PY{p}{)}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Using find\PYZus{}root():}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{f}\PY{o}{.}\PY{n}{find\PYZus{}root}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{100}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Using solve():
+ [
+x == -e\^{}x + 10
+]
+Using find\_root(): 2.070579904980303
+    \end{Verbatim}
+
+    \hypertarget{evaluating-functions}{%
+\subsection{Evaluating functions}\label{evaluating-functions}}
+
+If an expression contains only one variable you can evaluate it easily,
+even if it is not a function.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{21}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{var}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{y}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{f} \PY{o}{=} \PY{n}{x}\PY{o}{\PYZca{}}\PY{l+m+mi}{2}\PY{o}{\PYZhy{}}\PY{l+m+mi}{3}
+\PY{n}{g} \PY{o}{=} \PY{n}{x} \PY{o}{\PYZgt{}} \PY{n}{x}\PY{o}{\PYZca{}}\PY{l+m+mi}{2}
+
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{f}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{g}\PY{p}{(}\PY{l+m+mi}{3}\PY{o}{+}\PY{n}{y}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+1
+y + 3 > (y + 3)\^{}2
+    \end{Verbatim}
+
+    If an expression contains more than one variable, you can specify a
+value for each of them and they will be substituted in alphabetic order.
+You can also specify a value only for some of the variables.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{38}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{var}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{y}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{z}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+
+\PY{n}{f} \PY{o}{=} \PY{n}{y}\PY{o}{*}\PY{n}{z}\PY{o}{\PYZca{}}\PY{l+m+mi}{2} \PY{o}{\PYZhy{}} \PY{n}{y} \PY{o}{==} \PY{n}{z}
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{f}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{)}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{f}\PY{p}{(}\PY{n}{z}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+-2 == 0
+3*y == 2
+    \end{Verbatim}
+
+    \hypertarget{symbolic-computations}{%
+\subsection{Symbolic computations}\label{symbolic-computations}}
+
+Sage can understand and simplify symbolic expressions such as sums
+(finite or infinite) and products. In the following cell, we compute the
+following sums using the
+\href{https://doc.sagemath.org/html/en/reference/calculus/sage/symbolic/expression.html\#sage.symbolic.expression.Expression.sum}{\texttt{sum()}}
+function:
+
+\begin{align*}
+    \begin{array}{llcc}
+        (1) & \sum_{k=0}^nk                 &=&\frac{n^2+n}{2}\\
+        (2) & \sum_{k=0}^nk^4               &=&\frac{6n^5+15n^4+10n^3-n}{30}\\
+        (3) & \sum_{k=0}^n\binom nk         &=& 2^n\\
+        (4) & \sum_{k=0}^\infty \frac1{k^2} &=& \frac{\pi^2}{6}
+    \end{array}
+\end{align*}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{22}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{var}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{k}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{c+c1}{\PYZsh{} Remember to declare all variables}
+
+\PY{n}{s} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+\PY{n}{s}\PY{o}{.}\PY{n}{append}\PY{p}{(}  \PY{n+nb}{sum}\PY{p}{(}\PY{n}{k}\PY{p}{,} \PY{n}{k}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{n}{n}\PY{p}{)}  \PY{p}{)}
+\PY{n}{s}\PY{o}{.}\PY{n}{append}\PY{p}{(}  \PY{n+nb}{sum}\PY{p}{(}\PY{n}{k}\PY{o}{\PYZca{}}\PY{l+m+mi}{4}\PY{p}{,} \PY{n}{k}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{n}{n}\PY{p}{)}  \PY{p}{)}
+\PY{n}{s}\PY{o}{.}\PY{n}{append}\PY{p}{(}  \PY{n+nb}{sum}\PY{p}{(}\PY{n}{binomial}\PY{p}{(}\PY{n}{n}\PY{p}{,}\PY{n}{k}\PY{p}{)}\PY{p}{,} \PY{n}{k}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{n}{n}\PY{p}{)} \PY{p}{)}
+\PY{n}{s}\PY{o}{.}\PY{n}{append}\PY{p}{(}  \PY{n+nb}{sum}\PY{p}{(}\PY{l+m+mi}{1}\PY{o}{/}\PY{n}{k}\PY{o}{\PYZca{}}\PY{l+m+mi}{2}\PY{p}{,} \PY{n}{k}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{n}{infinity}\PY{p}{)}  \PY{p}{)}
+
+\PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{s}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{(}\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{) }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{i}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{s}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+(1) 1/2*n\^{}2 + 1/2*n
+(2) 1/5*n\^{}5 + 1/2*n\^{}4 + 1/3*n\^{}3 - 1/30*n
+(3) 2\^{}n
+(4) 1/6*pi\^{}2
+    \end{Verbatim}
+
+    An alternative notation is \texttt{expression.sum(k,\ a,\ b)}. There is
+an analogous
+\href{https://doc.sagemath.org/html/en/reference/calculus/sage/symbolic/expression.html\#sage.symbolic.expression.Expression.prod}{\texttt{prod()}}
+for products.
+
+    Sometimes Sage tries to keep an expression in its original form without
+expanding out sums and products. To change this behavior you can use the
+\href{https://doc.sagemath.org/html/en/reference/calculus/sage/symbolic/expression.html\#sage.symbolic.expression.Expression.expand}{\texttt{expand()}}
+function:
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{30}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{f} \PY{o}{=} \PY{p}{(}\PY{n}{x}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{\PYZca{}}\PY{l+m+mi}{2} \PY{o}{\PYZhy{}} \PY{p}{(}\PY{n}{x}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{\PYZca{}}\PY{l+m+mi}{2}
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{f}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{f}\PY{o}{.}\PY{n}{expand}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+(x + 1)\^{}2 - (x - 1)\^{}2
+4*x
+    \end{Verbatim}
+
+    \hypertarget{the-symbolic-ring}{%
+\subsubsection{The Symbolic Ring}\label{the-symbolic-ring}}
+
+\textbf{Reference:}
+{[}\href{https://doc.sagemath.org/html/en/reference/calculus/sage/symbolic/ring.html}{3}{]}
+
+The symbolic expressions that we have seen so far live in a ring called
+\emph{symbolic ring} and denoted by \texttt{SR} in Sage. This ring works
+like the ring \texttt{ZZ} of integers or \texttt{RR} of reals numbers.
+In particular, you can define matrices and other objects using it as a
+``basis''.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{45}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{var}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{a}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{c}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{d}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+
+\PY{n}{M} \PY{o}{=} \PY{n}{matrix}\PY{p}{(}\PY{p}{[}\PY{p}{[}\PY{n}{a}\PY{p}{,}\PY{n}{b}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{n}{c}\PY{p}{,}\PY{n}{d}\PY{p}{]}\PY{p}{]}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{M}\PY{o}{.}\PY{n}{determinant}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+
+\PY{n}{polring}\PY{o}{.}\PY{o}{\PYZlt{}}\PY{n}{x}\PY{o}{\PYZgt{}} \PY{o}{=} \PY{n}{SR}\PY{p}{[}\PY{p}{]}
+\PY{n}{f} \PY{o}{=} \PY{n}{x}\PY{o}{\PYZca{}}\PY{l+m+mi}{2} \PY{o}{+} \PY{l+m+mi}{2}\PY{o}{*}\PY{n}{a}\PY{o}{*}\PY{n}{x} \PY{o}{+} \PY{n}{a}\PY{o}{\PYZca{}}\PY{l+m+mi}{2}
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{f}\PY{o}{.}\PY{n}{roots}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+-b*c + a*d
+[(-a, 2)]
+    \end{Verbatim}
+
+    \textbf{Exercise.} Compute the eigenvalues of the matrix \begin{align*}
+\begin{pmatrix}
+\cos \alpha & \sin \alpha\\
+-\sin\alpha & \cos \alpha
+\end{pmatrix}
+\end{align*}
+
+    \hypertarget{calculus}{%
+\section{Calculus}\label{calculus}}
+
+\textbf{Reference:}
+{[}\href{https://doc.sagemath.org/html/en/reference/calculus/index.html}{4}{]}
+for an overview, but most functions are described in
+{[}\href{https://doc.sagemath.org/html/en/reference/calculus/sage/symbolic/expression.html}{1}{]}
+
+    \hypertarget{limits-and-series}{%
+\subsection{Limits and series}\label{limits-and-series}}
+
+\textbf{References:}
+{[}\href{https://doc.sagemath.org/html/en/reference/calculus/sage/calculus/calculus.html\#sage.calculus.calculus.limit}{5}{]}
+for limits,
+{[}\href{https://doc.sagemath.org/html/en/reference/calculus/sage/symbolic/expression.html\#sage.symbolic.expression.Expression.series}{6}{]}
+for series
+
+You can compute limits
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{54}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{f} \PY{o}{=} \PY{n}{sin}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{o}{/}\PY{n}{x}
+\PY{c+c1}{\PYZsh{} print(f(0)) \PYZsh{} This one gives an error}
+\PY{n+nb}{print}\PY{p}{(} \PY{n}{f}\PY{o}{.}\PY{n}{limit}\PY{p}{(}\PY{n}{x}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)} \PY{p}{)}
+
+\PY{n+nb}{print}\PY{p}{(} \PY{p}{(}\PY{n}{e}\PY{o}{\PYZca{}}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{n}{x}\PY{p}{)}\PY{p}{)}\PY{o}{.}\PY{n}{limit}\PY{p}{(}\PY{n}{x}\PY{o}{=}\PY{n}{infinity}\PY{p}{)} \PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+1
+0
+    \end{Verbatim}
+
+    \textbf{Exercise.} Compute the constant \(e\) using a limit.
+
+    You can also specify a direction for the limit. If you don't, Sage
+assumes that you want to take a two-sided limit.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{55}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{f} \PY{o}{=} \PY{n+nb}{abs}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{o}{/}\PY{n}{x}  \PY{c+c1}{\PYZsh{} 1 if x\PYZgt{}0, \PYZhy{}1 if x\PYZlt{}0}
+\PY{n+nb}{print}\PY{p}{(} \PY{n}{f}\PY{o}{.}\PY{n}{limit}\PY{p}{(}\PY{n}{x}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)} \PY{p}{)} \PY{c+c1}{\PYZsh{} undefined}
+\PY{n+nb}{print}\PY{p}{(} \PY{n}{f}\PY{o}{.}\PY{n}{limit}\PY{p}{(}\PY{n}{x}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{,} \PY{n+nb}{dir}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{+}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)} \PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(} \PY{n}{f}\PY{o}{.}\PY{n}{limit}\PY{p}{(}\PY{n}{x}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{,} \PY{n+nb}{dir}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZhy{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)} \PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+und
+1
+-1
+    \end{Verbatim}
+
+    There is also the alternative notation \texttt{limit(f,\ x,\ dir)} which
+does the same as \texttt{f.limit(x,\ dir)}.
+
+    You can also compute series expansions up to any order. \textbf{Watch
+out:} the notation uses \texttt{==} instead of \texttt{=} as
+\texttt{limit()} does.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{56}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{f} \PY{o}{=} \PY{n}{e}\PY{o}{\PYZca{}}\PY{n}{x}
+\PY{n}{g} \PY{o}{=} \PY{n}{sin}\PY{p}{(}\PY{n}{x}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{l+m+mi}{2}\PY{o}{*}\PY{n}{cos}\PY{p}{(}\PY{n}{x}\PY{p}{)}
+\PY{n}{h} \PY{o}{=} \PY{n}{log}\PY{p}{(}\PY{n}{x}\PY{p}{)}
+
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{f}\PY{o}{.}\PY{n}{series}\PY{p}{(}\PY{n}{x}\PY{o}{==}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{)}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{g}\PY{o}{.}\PY{n}{series}\PY{p}{(}\PY{n}{x}\PY{o}{==}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{7}\PY{p}{)}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{h}\PY{o}{.}\PY{n}{series}\PY{p}{(}\PY{n}{x}\PY{o}{==}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+1 + 1*x + 1/2*x\^{}2 + Order(x\^{}3)
+(-2) + 1*x + 1*x\^{}2 + (-1/6)*x\^{}3 + (-1/12)*x\^{}4 + 1/120*x\^{}5 + 1/360*x\^{}6 +
+Order(x\^{}7)
+1*(x - 1) + (-1/2)*(x - 1)\^{}2 + Order((x - 1)\^{}3)
+    \end{Verbatim}
+
+    \hypertarget{derivatives}{%
+\subsection{Derivatives}\label{derivatives}}
+
+\textbf{References:}
+{[}\href{https://doc.sagemath.org/html/en/reference/calculus/sage/symbolic/expression.html\#sage.symbolic.expression.Expression.derivative}{7}{]}
+and
+{[}\href{https://doc.sagemath.org/html/en/reference/calculus/sage/calculus/functional.html\#sage.calculus.functional.derivative}{8}{]}
+for derivatives,
+{[}\href{https://doc.sagemath.org/html/en/reference/calculus/sage/calculus/functions.html\#sage.calculus.functions.jacobian}{9}{]}
+for the Jacobian matrix and
+{[}\href{https://doc.sagemath.org/html/en/reference/calculus/sage/symbolic/expression.html\#sage.symbolic.expression.Expression.hessian}{10}{]}
+for the Hessian.
+
+    When computing derivatives, you need to specify with respect to which
+variables you want to derive, except in case there is only one.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{57}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{var}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{y}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(} \PY{p}{(}\PY{n}{x}\PY{o}{\PYZca{}}\PY{l+m+mi}{2}\PY{o}{+}\PY{l+m+mi}{2}\PY{o}{*}\PY{n}{y}\PY{o}{\PYZca{}}\PY{l+m+mi}{4}\PY{p}{)}\PY{o}{.}\PY{n}{derivative}\PY{p}{(}\PY{n}{y}\PY{p}{)} \PY{p}{)} \PY{c+c1}{\PYZsh{} Alternative: derivative(f, y)}
+\PY{n+nb}{print}\PY{p}{(} \PY{p}{(}\PY{l+m+mi}{2}\PY{o}{*}\PY{n}{x}\PY{o}{\PYZca{}}\PY{l+m+mi}{3}\PY{o}{\PYZhy{}}\PY{n}{x}\PY{o}{+}\PY{l+m+mi}{2}\PY{p}{)}\PY{o}{.}\PY{n}{derivative}\PY{p}{(}\PY{p}{)} \PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+8*y\^{}3
+6*x\^{}2 - 1
+    \end{Verbatim}
+
+    You can also compute higher order derivatives:
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{58}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n+nb}{print}\PY{p}{(} \PY{p}{(}\PY{n}{x}\PY{o}{\PYZca{}}\PY{l+m+mi}{3}\PY{p}{)}\PY{o}{.}\PY{n}{derivative}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{x}\PY{p}{)} \PY{p}{)} \PY{c+c1}{\PYZsh{} Same as (x\PYZca{}3).derivative(x, 2)}
+
+\PY{n}{f} \PY{o}{=} \PY{n}{x}\PY{o}{\PYZca{}}\PY{l+m+mi}{7}\PY{o}{*}\PY{n}{y}\PY{o}{\PYZca{}}\PY{l+m+mi}{2} \PY{o}{+} \PY{n}{x}\PY{o}{\PYZca{}}\PY{l+m+mi}{4}\PY{o}{*}\PY{n}{y}\PY{o}{\PYZca{}}\PY{l+m+mi}{2} \PY{o}{\PYZhy{}} \PY{l+m+mi}{2}\PY{o}{*}\PY{n}{x}\PY{o}{\PYZca{}}\PY{l+m+mi}{3} \PY{o}{+} \PY{n}{x}\PY{o}{\PYZca{}}\PY{l+m+mi}{2}\PY{o}{*}\PY{n}{y}\PY{o}{\PYZca{}}\PY{l+m+mi}{5} \PY{o}{+} \PY{n}{y} \PY{o}{+} \PY{l+m+mi}{2}
+\PY{n+nb}{print}\PY{p}{(} \PY{n}{f}\PY{o}{.}\PY{n}{derivative}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{)} \PY{p}{)}    \PY{c+c1}{\PYZsh{} Twice in x, once in y}
+\PY{n+nb}{print}\PY{p}{(} \PY{n}{f}\PY{o}{.}\PY{n}{derivative}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{)} \PY{p}{)} \PY{c+c1}{\PYZsh{} 4 times in x, twice in y}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+6*x
+84*x\^{}5*y + 10*y\^{}4 + 24*x\^{}2*y
+1680*x\^{}3 + 48
+    \end{Verbatim}
+
+    Jacobian and Hessian matrices are also easy to compute:
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{59}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{f} \PY{o}{=} \PY{p}{(}\PY{o}{\PYZhy{}}\PY{n}{x}\PY{o}{\PYZca{}}\PY{l+m+mi}{2} \PY{o}{+} \PY{l+m+mi}{2}\PY{o}{*}\PY{n}{x}\PY{o}{*}\PY{n}{y}\PY{p}{,} \PY{n}{y}\PY{o}{\PYZca{}}\PY{l+m+mi}{3}\PY{p}{,} \PY{n}{x}\PY{o}{+}\PY{n}{y}\PY{o}{+}\PY{n}{x}\PY{o}{*}\PY{n}{y}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(} \PY{n}{jacobian}\PY{p}{(}\PY{n}{f}\PY{p}{,} \PY{p}{[}\PY{n}{x}\PY{p}{,}\PY{n}{y}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{\PYZdq{}} \PY{p}{)}
+
+\PY{n}{g} \PY{o}{=} \PY{n}{x}\PY{o}{\PYZca{}}\PY{l+m+mi}{2} \PY{o}{+} \PY{n}{x}\PY{o}{*}\PY{n}{y} \PY{o}{+} \PY{n}{y}\PY{o}{\PYZca{}}\PY{l+m+mi}{3} \PY{o}{\PYZhy{}}\PY{l+m+mi}{2}\PY{o}{*}\PY{n}{x}\PY{o}{*}\PY{n}{y}\PY{o}{\PYZca{}}\PY{l+m+mi}{2} \PY{o}{\PYZhy{}}\PY{l+m+mi}{3}
+\PY{n+nb}{print}\PY{p}{(} \PY{n}{g}\PY{o}{.}\PY{n}{hessian}\PY{p}{(}\PY{p}{)} \PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+[-2*x + 2*y        2*x]
+[         0      3*y\^{}2]
+[     y + 1      x + 1]
+
+[         2   -4*y + 1]
+[  -4*y + 1 -4*x + 6*y]
+    \end{Verbatim}
+
+    \emph{Note:} the notation \texttt{f.jacobian({[}x,y{]})} is also valid,
+but only if you specify that \texttt{f} is vector by declaring it as
+\texttt{f\ =\ vector({[}...{]})}.
+
+    \hypertarget{integrals}{%
+\subsection{Integrals}\label{integrals}}
+
+\textbf{References:}
+{[}\href{https://doc.sagemath.org/html/en/reference/calculus/sage/symbolic/integration/integral.html}{11}{]}
+for symbolic integration and
+{[}\href{https://doc.sagemath.org/html/en/reference/calculus/sage/calculus/integration.html}{12}{]}
+for numerical methods.
+
+You should remember from high school or from your first
+calculus/analysis course that derivatives are easy, but integrals are
+hard. When using a computer software to solve your integrals, you have
+two choices:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  You can try to compute a primitive function exactly, and then (if you
+  are computing a definite integral) substitute the endpoints of your
+  integration interval to get the result. We can call this
+  \emph{symbolic integration}.
+\item
+  You can get an \emph{approximated} result with a \emph{numerical
+  method}. This method always gives some kind of result, but it cannot
+  be used to compute indefinite integrals.
+\end{enumerate}
+
+Sage can do both of these things, although people that work in numerical
+analysis and use often the second method tend to prefer other programs,
+such as Matlab (or its open-source clone Octave).
+
+    \hypertarget{symbolic-integration}{%
+\subsubsection{Symbolic integration}\label{symbolic-integration}}
+
+Symbolic integrals work more or less like derivatives. You must specify
+an integration variable, but the endpoints of the integration interval
+are optional. If they are not given you get an indefinite integral.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{60}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{var}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{a}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{f} \PY{o}{=} \PY{n}{x} \PY{o}{+} \PY{n}{sin}\PY{p}{(}\PY{n}{x}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(} \PY{n}{f}\PY{o}{.}\PY{n}{integral}\PY{p}{(}\PY{n}{x}\PY{p}{)} \PY{p}{)} \PY{c+c1}{\PYZsh{} Alternative: integral(f, x)}
+\PY{n+nb}{print}\PY{p}{(} \PY{n}{f}\PY{o}{.}\PY{n}{integral}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mi}{10}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{)} \PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(} \PY{n}{f}\PY{o}{.}\PY{n}{integral}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{a}\PY{p}{,} \PY{n}{b}\PY{p}{)} \PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+1/2*x\^{}2 - cos(x)
+0
+-1/2*a\^{}2 + 1/2*b\^{}2 + cos(a) - cos(b)
+    \end{Verbatim}
+
+    Your endpoints can also be \(\pm\infty\):
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{61}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n+nb}{print}\PY{p}{(} \PY{n}{integral}\PY{p}{(}\PY{n}{e}\PY{o}{\PYZca{}}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{n}{x}\PY{p}{)}\PY{p}{,}   \PY{n}{x}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,}         \PY{n}{infinity}\PY{p}{)} \PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(} \PY{n}{integral}\PY{p}{(}\PY{n}{e}\PY{o}{\PYZca{}}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{n}{x}\PY{o}{\PYZca{}}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{,} \PY{n}{x}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{n}{infinity}\PY{p}{,} \PY{n}{infinity}\PY{p}{)} \PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+1
+sqrt(pi)
+    \end{Verbatim}
+
+    The last function is also an example of an integral that perhaps you
+might want to compute numerically. In fact:
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{65}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n+nb}{print}\PY{p}{(} \PY{n}{integral}\PY{p}{(}\PY{n}{e}\PY{o}{\PYZca{}}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{n}{x}\PY{o}{\PYZca{}}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{,} \PY{n}{x}\PY{p}{)} \PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(} \PY{n}{integral}\PY{p}{(}\PY{n}{e}\PY{o}{\PYZca{}}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{n}{x}\PY{o}{\PYZca{}}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{,} \PY{n}{x}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{)} \PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+1/2*sqrt(pi)*erf(x)
+1/2*sqrt(pi)*erf(2) - 1/2*sqrt(pi)*erf(1)
+    \end{Verbatim}
+
+    Here \texttt{erf(x)} denotes the
+\href{https://en.wikipedia.org/wiki/Error_function}{error function}.
+
+    \hypertarget{numerical-integration}{%
+\subsubsection{Numerical integration}\label{numerical-integration}}
+
+In order to get an explicit value for the computations above, we can use
+a \emph{numerical} method.
+
+The word ``numerical'' does not have much to do with numbers, but it
+refers to the fact that we are trying to compute explicit results rather
+than symbolic or algebraic ones.
+\href{https://en.wikipedia.org/wiki/Numerical_analysis}{Numerical
+analysis} is the branch of mathematics that studies methods to
+approximate computations over the real or complex numbers. With these
+methods there is usually a trade-off between speed and precision.
+
+The Sage function
+\href{https://doc.sagemath.org/html/en/reference/calculus/sage/calculus/integration.html\#sage.calculus.integration.numerical_integral}{\texttt{numerical\_integral()}}
+takes as a parameter a real-valued one-variable function and the
+integration endpoints, and it returns both an approximate value for the
+integral and an error estimate.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{40}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{numerical\PYZus{}integral}\PY{p}{(}\PY{n}{e}\PY{o}{\PYZca{}}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{n}{x}\PY{o}{\PYZca{}}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{40}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+(0.13525725794999466, 1.5016572202374808e-15)
+\end{Verbatim}
+\end{tcolorbox}
+        
+    The result above means, in symbols \begin{align*}
+\int_1^2 e^{-x^2}\mathrm dx = 0.13525725794999466 \pm 1.5016572202374808\times 10^{-15}
+\end{align*}
+
+There is also a
+\href{https://doc.sagemath.org/html/en/reference/calculus/sage/calculus/integration.html\#sage.calculus.integration.monte_carlo_integral}{\texttt{monte\_carlo\_integral()}}
+method for functions with more than one variable.
+
+    \textbf{Exercise.} Compute the area of the ellipse of equation
+\(y^2+\left(\frac x3\right)^2=1\).
+
+    \hypertarget{differential-equations}{%
+\subsection{Differential equations}\label{differential-equations}}
+
+\textbf{Reference:}
+{[}\href{https://doc.sagemath.org/html/en/reference/calculus/sage/calculus/desolvers.html}{13}{]}
+
+A
+\href{https://en.wikipedia.org/wiki/Differential_equation}{differential
+equation} is an equation involving an unknwon function and its
+derivatives. They can be of two kinds: \emph{ordinary} differential
+equations
+(\href{https://en.wikipedia.org/wiki/Ordinary_differential_equation}{ODE})
+and \emph{partial} differential equations
+(\href{https://en.wikipedia.org/wiki/Partial_differential_equation}{PDE}).
+The latter involve multivariate functions and their partial derivatives.
+
+Differential equations are in general hard to solve \emph{exactly} (or
+\emph{symbolically}): even a simple equation of the form \(f'(x)=g(x)\),
+where \(g(x)\) is someknown function, requires solving the integral
+\(\int g(x)\mathrm{d}x\) in order to find \(f\), which as we know is not
+always easy!
+
+Theoretical results on differential equations usually ensure the
+existence and/or uniquess of a solution under certain conditions, but in
+general they do not give a way to solve them. There exits many methods
+to find approximate solutions, and some of them are implemented in Sage
+as well (see
+{[}\href{https://doc.sagemath.org/html/en/reference/calculus/sage/calculus/desolvers.html}{13}{]}).
+However we will focus on the simple ODEs that can be solved exactly.
+
+Let's start with a simple example. Let's find all functions \(f(x)\)
+such that \(f'(x)=f(x)\). In order to do so, we need to use the
+\texttt{function()} construct, which allows us to define an ``unknwon''
+function inside Sage, like we define variables with \texttt{var()}.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{4}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{var}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{x}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{function}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{f}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{equation} \PY{o}{=} \PY{n}{derivative}\PY{p}{(}\PY{n}{f}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{)} \PY{o}{==} \PY{n}{f}\PY{p}{(}\PY{n}{x}\PY{p}{)}
+\PY{n}{desolve}\PY{p}{(}\PY{n}{equation}\PY{p}{,} \PY{n}{f}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{)} \PY{c+c1}{\PYZsh{} f is the unknown function}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{4}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\_C*e\^{}x
+\end{Verbatim}
+\end{tcolorbox}
+        
+    As you can expect, they are all the functions \(Ce^x\) for some constant
+\(C\). The constant \(C\) plays the same role as the constant in the
+solution of an integral, but in this case Sage writes it explicitly.
+
+We can also specify \emph{initial conditions} for our function. For
+example we can impose that \(f(0)=3\) as follows:
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{5}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{desolve}\PY{p}{(}\PY{n}{equation}\PY{p}{,} \PY{n}{f}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{5}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+3*e\^{}x
+\end{Verbatim}
+\end{tcolorbox}
+        
+    You can also solve \emph{second order} equations, that is equations
+where the second derivative also appears. In this case if you want to
+specify an initial condition you should write the triple of values
+\((x_0, f(x_0), f'(x_0))\).
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{6}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{equation} \PY{o}{=} \PY{n}{derivative}\PY{p}{(}\PY{n}{f}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{,} \PY{n}{x}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{)} \PY{o}{+} \PY{n}{x}\PY{o}{*}\PY{n}{derivative}\PY{p}{(}\PY{n}{f}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{)} \PY{o}{==} \PY{l+m+mi}{1}
+\PY{n}{desolve}\PY{p}{(}\PY{n}{equation}\PY{p}{,} \PY{n}{f}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{6}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+-1/2*I*sqrt(2)*sqrt(pi)*integrate(erf(1/2*I*sqrt(2)*x)*e\^{}(-1/2*x\^{}2), x)
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \textbf{Exercise.} Use Sage to find out the functions \(f(x)\) that
+satisfy \begin{align*}
+    \begin{array}{rlcrl}
+        (A) &
+        \begin{cases}
+            f(0)   &= 1\\
+            f'(0)  &= 0\\
+            f''(x) &= -f(x)
+        \end{cases}
+        & \qquad \qquad &
+        (B) &
+        \begin{cases}
+            f(0)   &= 0\\
+            f'(0)  &= 1\\
+            f''(x) &= -f(x)
+        \end{cases}
+    \end{array}
+\end{align*}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+
+\end{Verbatim}
+\end{tcolorbox}
+
+    \hypertarget{a-real-world-example}{%
+\subsubsection{A real-world example}\label{a-real-world-example}}
+
+Differential equations have countless applications in Science, so it
+would be a shame not to see at least a simple one.
+
+Consider an object moving with constant acceleration \(a\). Its velocity
+at time \(t\) is described by the formula \(v(t) = v(0) + at\). For
+example an object falling from the sky has acceleration
+\(g\sim 9.8 m/s^2\) towards the ground, so its velocity is
+\(v(t) = -gt\).
+
+However in the real world you need to take into account the air's
+resistance, which depends (among other things) on the velocity of the
+object. In this case the acceleration \(a(t)\) is not constant anymore,
+and it satisfies an equation of the form \(a(t)=-g -kv(t)\), where \(k\)
+is some constant that may depend on the shape and mass of the object (in
+practice it may be more complicated than this).
+
+Since the acceleration is the derivative of the velocity, we have a
+differential equation \begin{align*}
+    v'(t) = -g -kv(t)
+\end{align*} and we can try to solve it with Sage!
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{7}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{var}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{t}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{function}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{v}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{g} \PY{o}{=} \PY{l+m+mf}{9.8}
+\PY{n}{k} \PY{o}{=} \PY{l+m+mf}{1.5}
+\PY{n}{conditions} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{)} \PY{c+c1}{\PYZsh{} Start with velocity 0}
+\PY{n}{desolve}\PY{p}{(}\PY{n}{derivative}\PY{p}{(}\PY{n}{v}\PY{p}{(}\PY{n}{t}\PY{p}{)}\PY{p}{)} \PY{o}{==} \PY{o}{\PYZhy{}}\PY{n}{g} \PY{o}{\PYZhy{}}\PY{n}{k}\PY{o}{*}\PY{n}{v}\PY{p}{(}\PY{n}{t}\PY{p}{)}\PY{p}{,} \PY{n}{v}\PY{p}{(}\PY{n}{t}\PY{p}{)}\PY{p}{,} \PY{n}{conditions}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{7}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+-98/15*(e\^{}(3/2*t) - 1)*e\^{}(-3/2*t)
+\end{Verbatim}
+\end{tcolorbox}
+        
+    If you want to solve this equation symbolically (that is, keeping \(g\)
+and \(k\) in symbols) you need to specify that \(t\) is the
+\emph{independent variable} of the equation:
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{10}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{var}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{t}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{g}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{k}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{function}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{v}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{conditions} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{)} \PY{c+c1}{\PYZsh{} Start with velocity 0}
+\PY{n}{desolve}\PY{p}{(}\PY{n}{derivative}\PY{p}{(}\PY{n}{v}\PY{p}{(}\PY{n}{t}\PY{p}{)}\PY{p}{)} \PY{o}{==} \PY{o}{\PYZhy{}}\PY{n}{g} \PY{o}{\PYZhy{}}\PY{n}{k}\PY{o}{*}\PY{n}{v}\PY{p}{(}\PY{n}{t}\PY{p}{)}\PY{p}{,} \PY{n}{v}\PY{p}{(}\PY{n}{t}\PY{p}{)}\PY{p}{,} \PY{n}{conditions}\PY{p}{,} \PY{n}{ivar}\PY{o}{=}\PY{n}{t}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{10}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+-(g*e\^{}(k*t) - g)*e\^{}(-k*t)/k
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \hypertarget{basic-data-analysis-and-visualization}{%
+\section{Basic data analysis and
+visualization}\label{basic-data-analysis-and-visualization}}
+
+\hypertarget{statistics}{%
+\subsection{Statistics}\label{statistics}}
+
+\textbf{References:}
+{[}\href{https://doc.sagemath.org/html/en/reference/stats/sage/stats/basic_stats.html}{14}{]}
+
+Sage includes the most basic functions for statistical analysis.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{20}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{L} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mi}{6}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mi}{4}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}
+
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Values:}\PY{l+s+se}{\PYZbs{}t}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{L}\PY{p}{)}
+
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Mean:}\PY{l+s+se}{\PYZbs{}t}\PY{l+s+se}{\PYZbs{}t}\PY{l+s+se}{\PYZbs{}t}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}           \PY{n}{mean}\PY{p}{(}\PY{n}{L}\PY{p}{)}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Median:}\PY{l+s+se}{\PYZbs{}t}\PY{l+s+se}{\PYZbs{}t}\PY{l+s+se}{\PYZbs{}t}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}         \PY{n}{median}\PY{p}{(}\PY{n}{L}\PY{p}{)}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Mode:}\PY{l+s+se}{\PYZbs{}t}\PY{l+s+se}{\PYZbs{}t}\PY{l+s+se}{\PYZbs{}t}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}           \PY{n}{mode}\PY{p}{(}\PY{n}{L}\PY{p}{)}\PY{p}{)}
+
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Standard deviation:}\PY{l+s+se}{\PYZbs{}t}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{std}\PY{p}{(}\PY{n}{L}\PY{p}{)}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Variance:}\PY{l+s+se}{\PYZbs{}t}\PY{l+s+se}{\PYZbs{}t}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}         \PY{n}{variance}\PY{p}{(}\PY{n}{L}\PY{p}{)}\PY{p}{)}
+
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Moving average (5):}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{moving\PYZus{}average}\PY{p}{(}\PY{n}{L}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Values:  [1, 2, 3, 3, -6, -2, 4, -1, 0, 2, 3, -4, 0]
+Mean:                    5/13
+Median:                  1
+Mode:                    [3]
+Standard deviation:      2*sqrt(29/13)
+Variance:                116/13
+Moving average (5): [3/5, 0, 2/5, -2/5, -1, 3/5, 8/5, 0, 1/5]
+    \end{Verbatim}
+
+    You can also compare your data to a probability distribution, see
+\href{https://doc.sagemath.org/html/en/reference/probability/sage/probability/probability_distribution.html}{this
+page}. If you need to do more advanced statistics you should consider
+using \href{https://www.r-project.org/}{R}; you can also use it inside
+Sage.
+
+    \hypertarget{plotting}{%
+\subsection{Plotting}\label{plotting}}
+
+\textbf{Reference:}
+{[}\href{https://doc.sagemath.org/html/en/reference/plotting/index.html}{15}{]},
+more specifically the subsection
+{[}\href{https://doc.sagemath.org/html/en/reference/plotting/sage/plot/plot.html}{16}{]}.
+
+Some Sage objects can be plotted:
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{21}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{f} \PY{o}{=} \PY{n}{sin}\PY{p}{(}\PY{n}{x}\PY{p}{)}
+\PY{n}{plot}\PY{p}{(}\PY{n}{f}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+ 
+            
+\prompt{Out}{outcolor}{21}{}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_75_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+
+    Sage's plotting functions are based on Python's
+\href{https://matplotlib.org/}{matplotlib}.
+
+You can give a number of options to adjust the aspect of your plot, see
+\href{https://doc.sagemath.org/html/en/reference/plotting/sage/plot/plot.html\#sage.plot.plot.plot}{here}.
+Let's see some of them:
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{67}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{f} \PY{o}{=} \PY{n}{sin}\PY{p}{(}\PY{n}{x}\PY{p}{)}
+\PY{n}{plot}\PY{p}{(}\PY{n}{f}\PY{p}{,}
+     \PY{o}{\PYZhy{}}\PY{l+m+mi}{2}\PY{o}{*}\PY{n}{pi}\PY{p}{,} \PY{l+m+mi}{2}\PY{o}{*}\PY{n}{pi}\PY{p}{,}                   \PY{c+c1}{\PYZsh{} bounds for x}
+     \PY{n}{ymin}  \PY{o}{=} \PY{o}{\PYZhy{}}\PY{l+m+mf}{0.7}\PY{p}{,} \PY{n}{ymax} \PY{o}{=} \PY{l+m+mf}{0.7}\PY{p}{,}      \PY{c+c1}{\PYZsh{} bounds for y}
+     \PY{n}{color} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{red}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}
+     \PY{n}{title} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{The sin function}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}
+    \PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+ 
+            
+\prompt{Out}{outcolor}{67}{}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_77_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+
+    Some of the options are not described precisely in Sage's documentation,
+but you can find them on
+\href{https://matplotlib.org/stable/contents.html}{matplotlib's
+documentation}. You can find many examples online for adjusting your
+plot as you like!
+
+    If you need to plot more than one object at the time, you can sum two
+plots and show them together with \texttt{show()}:
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{36}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{cosine}      \PY{o}{=} \PY{n}{plot}\PY{p}{(}\PY{n}{cos}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{n}{x}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{n}{pi}\PY{o}{/}\PY{l+m+mi}{2}\PY{p}{,}\PY{n}{pi}\PY{o}{/}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{red}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{exponential} \PY{o}{=} \PY{n}{plot}\PY{p}{(}\PY{n}{exp}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{n}{x}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mf}{0.5}\PY{p}{)}\PY{p}{)}
+
+\PY{n}{show}\PY{p}{(}\PY{n}{cosine} \PY{o}{+} \PY{n}{exponential}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_80_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    Finally, there are other types of plots that you can use, like
+\href{https://doc.sagemath.org/html/en/reference/plotting/sage/plot/scatter_plot.html\#sage.plot.scatter_plot.scatter_plot}{scatter
+plots} and
+\href{https://doc.sagemath.org/html/en/reference/plotting/sage/plot/bar_chart.html\#sage.plot.bar_chart.bar_chart}{bar
+charts}. You can also add
+\href{https://doc.sagemath.org/html/en/reference/plotting/sage/plot/text.html\#sage.plot.text.text}{text}
+to your plot:
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{53}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{b} \PY{o}{=} \PY{n}{bar\PYZus{}chart}\PY{p}{(}\PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{10}\PY{p}{)}\PY{p}{)}
+\PY{n}{s} \PY{o}{=} \PY{n}{scatter\PYZus{}plot}\PY{p}{(}\PY{p}{[}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{4}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{8}\PY{p}{,}\PY{l+m+mi}{8}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{4}\PY{p}{,}\PY{l+m+mi}{7}\PY{p}{)}\PY{p}{]}\PY{p}{,}
+                 \PY{n}{marker} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{*}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}       \PY{c+c1}{\PYZsh{} symbol}
+                 \PY{n}{markersize} \PY{o}{=} \PY{l+m+mi}{100}\PY{p}{,}
+                 \PY{n}{edgecolor}  \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{black}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}
+                 \PY{n}{facecolor}  \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{red}\PY{l+s+s2}{\PYZdq{}}
+                \PY{p}{)}
+\PY{n}{t} \PY{o}{=} \PY{n}{text}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{wow, such plot!}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{8}\PY{p}{)}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{black}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{fontsize}\PY{o}{=}\PY{l+m+mi}{20}\PY{p}{)}
+\PY{n}{show}\PY{p}{(}\PY{n}{b} \PY{o}{+} \PY{n}{s} \PY{o}{+} \PY{n}{t}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_82_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \hypertarget{interpolation}{%
+\subsection{Interpolation}\label{interpolation}}
+
+\textbf{References:}
+{[}\href{https://doc.sagemath.org/html/en/reference/polynomial_rings/sage/rings/polynomial/polynomial_ring.html\#sage.rings.polynomial.polynomial_ring.PolynomialRing_field.lagrange_polynomial}{17}{]}
+and
+{[}\href{https://doc.sagemath.org/html/en/reference/calculus/sage/calculus/interpolation.html}{18}{]}.
+
+When you need to work with a discrete set of data, like measurements of
+real-world quantities, it can be useful to visualize a ``smoothed out''
+version of this data, for example by plotting a function that
+approximates it.
+
+One way to do so is finding the lowest-degree polynomial that passes
+through all your points. This is called
+\href{https://en.wikipedia.org/wiki/Lagrange_polynomial}{Lagrange
+Polynomial}.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{65}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{points} \PY{o}{=} \PY{p}{[} \PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{l+m+mf}{1.5}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{4}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{3}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{)} \PY{p}{]}
+\PY{n}{polring}\PY{o}{.}\PY{o}{\PYZlt{}}\PY{n}{x}\PY{o}{\PYZgt{}} \PY{o}{=} \PY{n}{QQ}\PY{p}{[}\PY{p}{]} \PY{c+c1}{\PYZsh{} you need to specify a polynomial ring}
+\PY{n}{lp} \PY{o}{=} \PY{n}{polring}\PY{o}{.}\PY{n}{lagrange\PYZus{}polynomial}\PY{p}{(}\PY{n}{points}\PY{p}{)}
+\PY{n}{show}\PY{p}{(}\PY{n}{scatter\PYZus{}plot}\PY{p}{(}\PY{n}{points}\PY{p}{,} \PY{n}{facecolor}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{red}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+     \PY{o}{+} \PY{n}{plot}\PY{p}{(}\PY{n}{lp}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{)} \PY{c+c1}{\PYZsh{} slightly different notation for polynomials}
+     \PY{o}{+} \PY{n}{text}\PY{p}{(}\PY{n}{lp}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{8}\PY{p}{)}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{black}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+    \PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_84_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    One can compute the Lagrange Polynomial over any base ring, and it has
+the advantage that it is a very ``nice'' function (continuous and
+differentiable as much as you like, with easily computable derivatives
+and primitives).
+
+However, it does not always give you good approximation of your data:
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{2}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{R} \PY{o}{=} \PY{p}{[}\PY{n}{x}\PY{o}{/}\PY{l+m+mi}{10} \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{10}\PY{p}{,}\PY{l+m+mi}{10}\PY{p}{)}\PY{p}{]}
+\PY{n}{L} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{1}\PY{o}{/}\PY{p}{(}\PY{l+m+mi}{1}\PY{o}{+}\PY{l+m+mi}{25}\PY{o}{*}\PY{n}{x}\PY{o}{\PYZca{}}\PY{l+m+mi}{2}\PY{p}{)} \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n}{R}\PY{p}{]}
+\PY{n}{points} \PY{o}{=} \PY{p}{[}\PY{p}{(}\PY{n}{R}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{,} \PY{n}{L}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{L}\PY{p}{)}\PY{p}{)}\PY{p}{]}
+\PY{n}{polring}\PY{o}{.}\PY{o}{\PYZlt{}}\PY{n}{x}\PY{o}{\PYZgt{}} \PY{o}{=} \PY{n}{RR}\PY{p}{[}\PY{p}{]}
+\PY{n}{lp} \PY{o}{=} \PY{n}{polring}\PY{o}{.}\PY{n}{lagrange\PYZus{}polynomial}\PY{p}{(}\PY{n}{points}\PY{p}{)}
+
+\PY{n}{show}\PY{p}{(}\PY{n}{plot}\PY{p}{(}\PY{n}{lp}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mf}{0.82}\PY{p}{,} \PY{l+m+mf}{0.72}\PY{p}{)} \PY{o}{+} \PY{n}{scatter\PYZus{}plot}\PY{p}{(}\PY{n}{points}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_86_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    This particular example is called
+\href{https://en.wikipedia.org/wiki/Runge\%27s_phenomenon}{Runge's
+phenomenon}. For a better approximation you can use a
+\href{https://en.wikipedia.org/wiki/Spline_(mathematics)}{spline}, which
+is a \emph{piecewise} polynomial function:
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{90}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{show}\PY{p}{(}\PY{n}{plot}\PY{p}{(}\PY{n}{spline}\PY{p}{(}\PY{n}{points}\PY{p}{)}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)} \PY{o}{+} \PY{n}{scatter\PYZus{}plot}\PY{p}{(}\PY{n}{points}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_88_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    A detailed explanation of splines is a good topic for a course of
+numerical analysis. For this course it is enough that you know that they
+exist and they can be plotted.
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+\end{document}

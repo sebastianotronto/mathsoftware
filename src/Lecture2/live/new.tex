@@ -1,0 +1,99 @@
+\documentclass[10pt,a5paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+
+\usepackage{enumitem}
+
+\title{Latex Example Live}
+\author{Sebastiano Tronto}
+\date{12-03-2021}
+
+
+
+\newtheorem{mythm}{My Theorem}[section]
+
+\theoremstyle{definition}
+\newtheorem{prop}[mythm]{Proposition}
+\newtheorem{defi}{Definition}
+
+\theoremstyle{remark}
+\newtheorem*{warning}{Achtung}
+
+\renewcommand{\thesection}{\S\arabic{section}}
+\renewcommand{\themythm}{\arabic{section},\Alph{mythm}}
+
+
+\numberwithin{equation}{section}
+
+\renewcommand{\theequation}{\arabic{section}.\arabic{equation}}
+
+\begin{document}
+
+\maketitle
+
+
+\section{Text}
+
+abc
+
+\begin{align}
+1+1=2
+\end{align}
+
+The section \ref{ts} contains theorems
+
+\section{inbetween}
+
+\section{Last section}
+\label{ts}
+
+
+\begin{prop}
+A less important fact
+\end{prop}
+
+\begin{mythm}[Gauss]
+\label{gaussthm}
+The equation \(2+x=4\) is true for \(x=2\).
+\begin{align}
+\label{eq}
+\sum_{i=1}^ni
+\end{align}
+\end{mythm}
+
+The above equation \eqref{eq} is not an equation
+
+\arabic{equation}
+
+
+\setcounter{defi}{23}
+\begin{defi}
+a definition
+\end{defi}
+
+\setcounter{mythm}{10}
+\begin{mythm}
+Another important fact.
+\end{mythm}
+
+\begin{warning}
+It is a common mistake to think that \(2+2=5\)
+\end{warning}
+
+
+\vspace{1cm}
+
+\begin{enumerate}[label=(\Roman*)]
+	\item an item
+	\item another one
+\end{enumerate}
+
+\arabic{enumi}
+
+\ref{gaussthm} is a theorem by gauss
+
+\end{document}

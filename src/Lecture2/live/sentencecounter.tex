@@ -1,0 +1,66 @@
+\documentclass[10pt,a5paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+
+\usepackage{xcolor}
+
+\newcounter{sentence}[section]
+\renewcommand{\thesentence}{[\thesection,\arabic{sentence}]}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\words}{blah bla blha}
+
+\newcommand{\todo}[1]{{\color{red}\large TODO: #1}}
+
+\newcommand{\sent}[1]{\refstepcounter{sentence}#1\textsuperscript{\arabic{sentence}}}
+
+\newcommand{\mymatrix}[4]{\begin{pmatrix}
+#1 & #2 \\
+#3 & #4
+\end{pmatrix}}
+
+\newcommand{\twocases}[4]{\begin{cases}
+#1 & #2 \\
+#3 & #4
+\end{cases}}
+
+
+\begin{document}
+
+\section{First section}
+
+\sent{A sentence before the first one}
+
+\sent{This is a sentence.}
+\label{s1}
+\sent{This is another sentence.}
+
+\todo{finish the first section}
+
+This is a longer sentence that takes more than one line line maybe~no still it random words to show that how tilde works i dont know Theorem~10
+
+\section{Second section}
+
+\sent{A sentence in the second section.}
+\label{sanother}
+
+\vspace{2cm}
+
+In sentence~\ref{s1}... \todo{what did I want to say?}
+
+\[ \R \]
+
+\words
+
+\[
+\mymatrix{x}{a_{2,2}}{0}{f(10)}
+\]
+
+\[
+f(x)=\twocases{x^2}{\text{if }x>0}{-x^3}{\text{otherwise.}}
+\]
+
+\end{document}

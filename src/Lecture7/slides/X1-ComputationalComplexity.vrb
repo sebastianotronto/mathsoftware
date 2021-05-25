@@ -1,0 +1,10 @@
+\frametitle{Fibonacci with memorization}
+\begin{adjustbox}{scale={0.85}{0.9},center}
+	\begin{tikzcd}[column sep=1mm]
+		& & & & & & & & F(5) \ar[drrr] \ar[dlll]\\
+		& & & & & F(4)\ar[dll]\ar[dr] & & & & & & {\color{blue}F(3)}\\
+		& & & F(3) \ar[dl]\ar[dr] & & & {\color{blue}F(2)}\\
+		& & F(2) \ar[dl]\ar[dr] & & {\color{blue}F(1)} \\
+		& F(1) & & F(0)
+	\end{tikzcd}
+	\end{adjustbox}

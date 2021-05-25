@@ -1,0 +1,18 @@
+\frametitle{Math mode - align and equation}
+\begin{center}
+    For formulas spanning multiple lines you can use:
+    \begin{columns}
+      \column{0.5\textwidth}
+        \texttt{\bs begin\{align\}(...)\bs end \{align\}}
+        \begin{align}
+          \sum_{n=1}^\infty n =& 1+2+3+4+5+\cdots=\\
+                              =& -\frac12
+        \end{align}
+      \column{0.5\textwidth}
+        \texttt{\bs begin\{equation\}(...)\bs end \{equation\}}
+        \begin{equation}
+          \sum_{n=1}^\infty n = 1+2+3+4+5+\cdots=\\
+                              = -\frac12
+        \end{equation}
+    \end{columns}
+  \end{center}

@@ -1,0 +1,18 @@
+\frametitle{Custom blocks}
+
+  {
+    \setbeamercolor{block title}{fg=blue,bg=green}
+    \setbeamercolor{block body}{fg=black,bg=pink!50}
+    \begin{block}{A custom block, with ugly colors}
+      \begin{verbatim}
+{
+    \setbeamercolor{block title}{fg=blue,bg=green}
+    \setbeamercolor{block body}{fg=black,bg=pink!50}
+
+    \begin{block}{A custom block, with ugly colors}
+        ...
+    \end{block}
+}
+      \end{verbatim}
+    \end{block}
+  }

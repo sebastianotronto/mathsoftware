@@ -1,0 +1,143 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+
+\title{Mathematical software - homework 1}
+\author{Sebastiano Tronto}
+
+\newtheorem{thm}{Theorem}
+\newtheorem{prop}[thm]{Proposition}
+
+\theoremstyle{definition}
+\newtheorem{ex}{Exercise}
+
+\theoremstyle{definition}
+\newtheorem*{remark}{Remark}
+
+\begin{document}
+
+\noindent\hrulefill
+
+\begin{center}
+\Huge{\textbf{Mathematical Software - Homework 1}}
+\end{center}
+
+\noindent\hrulefill
+\begin{center}
+\begin{tabular}{lcr}
+\texttt{sebastiano.tronto@uni.lu} & \qquad \qquad \qquad \qquad &
+\textbf{Deadline: Sunday, March 28th}
+\end{tabular}
+\end{center}
+
+\vspace{1cm}
+
+\begin{center}
+  \emph{\large
+    For each of the following exercises submit a .tex and a .pdf file.
+  }
+\end{center}
+
+\vspace{1cm}
+
+\begin{ex}
+  Write a short Latex document that contains the following theorem-like
+  environments using the \texttt{\textbackslash newtheorem} command of the
+  \texttt{amsthm} package (the box around the text is not needed):
+  \begin{center}
+    \fbox{\parbox{0.95\textwidth}{
+      \begin{prop}[Fundamental Theorem of Algebra]
+        \label{prop:fta}
+        Let \(p(x)\) be a non-constant polynomial with coefficients in
+        $\mathbb C$. Then there is \(z\in\mathbb C\) such that $p(z)=0$.
+      \end{prop}
+
+      \begin{remark}
+        Proposition \ref{prop:fta} is not true for polynomials with
+        coefficients in $\mathbb R$. For example
+        \begin{align}
+          p(x) = x^2+1
+        \end{align}
+        does not have real roots.
+      \end{remark}
+
+      \begin{thm}
+        If $X$ and $Y$ are $\sigma$-finite measure spaces and $f:X\times Y\to
+        \mathbb R$ is measurable and such that
+        \begin{align*}
+          \int_{X\times Y}|f(x,y)|\mathrm d(x,y) < \infty
+        \end{align*}
+        then
+        \begin{align}
+          \label{eq:fubini}
+          \int_X\left(\int_Yf(x,y)\mathrm d y\right)\mathrm d x =
+          \int_Y\left(\int_Xf(x,y)\mathrm d x\right)\mathrm d y =
+          \int_{X\times Y} f(x,y)\mathrm d(x,y)\,.
+        \end{align}
+      \end{thm}
+
+      \begin{remark}
+        In practice, equation \eqref{eq:fubini} means that we can switch the
+        order of integration in a double integral.
+      \end{remark}
+    }}
+  \end{center}
+  Notice that Propositions, Theorems and some of the equations are numbered,
+  and some of them are referred to in the Remarks. This numbering should change
+  accordingly if more numbered Theorems and equations are added before this
+  part of the text.
+\end{ex}
+
+\vspace{0.8cm}
+
+\begin{ex}
+[This is basically a ``do whatever you want, just do something'' exercise]
+Write a Mathematical document in Latex, where ``Mathematical'' means any text
+that contains both inline and displaystyle symbols and formulas, and where most
+of the sentences contain a Mathematical symbol.
+For example, you can submit (part of) your homework or notes for another course
+that you are following at the moment.
+
+You must follow the following rules:
+\begin{itemize}
+  \item Your document must be at least 2 pages long.
+  \item Use the following in your preamble:
+    \begin{verbatim}
+\documentaclass[12pt,a4paper]{article}
+\usepackage[left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm]{geometry}
+    \end{verbatim}
+\end{itemize}
+The document itself can be about any area of Mathematics, Physics or similar.
+The correctness of the Mathematics itself will not be judged for this course.
+\end{ex}
+
+\section*{Grading}
+
+This homework assignment is worth 25\% of your final grade.
+
+\vspace{0.3cm}
+\textbf{Exercise 1 (10 points).}
+\begin{itemize}
+  \item A correct use of the \texttt{\textbackslash newtheorem} command is
+        worth 4 out of 10 points.
+  \item A correct use of the labelling and reference system is worth 4 points.
+  \item Reproducing correctly the mathematical formulas is worth 2 points.
+\end{itemize}
+
+\textbf{Exercise 2 (10 points).}
+\begin{itemize}
+  \item A resulting pdf file that looks readable and correct is worth 6 out of
+        10 points.
+  \item The correct use of latex commands and environments is worth 4 out of
+        10 points. \emph{Examples of mistakes in this sense: adjusting manually
+        the size of parenthesis instead of using \texttt{\textbackslash left}
+        and \texttt{\textbackslash right}; using \texttt{\textbackslash Sigma}
+        when you actually want to write a sum symbol.}
+\end{itemize}
+
+
+\end{document}

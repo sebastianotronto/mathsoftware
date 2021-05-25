@@ -1,0 +1,24 @@
+\frametitle{Examples}
+\begin{tabular}{c|l}
+    \begin{tikzcd} X\arrow[r,dashed,"f"] & Y \end{tikzcd} &
+      \begin{tabular}{l}
+        \texttt{X \bs arrow[r,dashed,"f"] \& Y}
+      \end{tabular} \\
+    & \quad \\
+    \begin{tikzcd}
+      A\arrow[r,bend right,"\pi^2"] & B\arrow[r,bend left,tail] & C
+    \end{tikzcd} &
+      \begin{tabular}{l}
+        \texttt{A \bs arrow[r,bend right,"\bs pi\^{}2"] \&} \\
+        \texttt{B \bs arrow[r,bend left,tail] \& C}
+      \end{tabular} \\
+    & \quad \\
+    \begin{tikzcd}
+      A \arrow[d,"1"'] \arrow[dr,"2"] & B \\
+      C & D \arrow[l] \arrow[u,out=45,in=0]
+    \end{tikzcd} &
+      \begin{tabular}{l}
+        \texttt{A \bs arrow[d,"1"'] \bs arrow[dr,"2"] \& B \bs\bs} \\
+        \texttt{C \& D \bs arrow[l] \bs arrow[u,out=45,in=0]}
+      \end{tabular}
+  \end{tabular}

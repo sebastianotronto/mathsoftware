@@ -1,0 +1,32 @@
+\frametitle{\texttt {while} loop}
+\begin{columns}
+    \column{0.45\textwidth}
+      \texttt{{\bf while} \emph{condition}:}
+
+      \texttt{\qquad instruction1}
+
+      \texttt{\qquad instruction2}
+
+      \texttt{\qquad \dots}
+    \column{0.55\textwidth}
+      \begin{tikzpicture}
+        \tikzstyle{s} = [rectangle, rounded corners, text centered,
+                                                       draw=black, fill=red!30]
+        \tikzstyle{p} = [rectangle, text centered, draw=black, fill=orange!30]
+        \tikzstyle{d} = [rectangle, text centered, draw=black, fill=green!30]
+
+        \node(start)  [s]                     {Start};
+        \node(cond)   [d, below of=start]     {\texttt{\emph{condition}}?};
+        \node(inst1)  [p, right of=cond, xshift=2.7cm] {\texttt{instruction1}};
+        \node(inst2)  [p, below of=inst1]     {\texttt{instruction2}};
+        \node(dots)   [p, below of=inst2]     {\texttt{\dots}};
+        \node(end)    [s, below of=other, yshift=-0.5cm] {End};
+
+        \draw[->] (start) -- (cond);
+        \draw[->] (cond) -- node[anchor=south] {\texttt{True}} (inst1);
+        \draw[->] (inst1) -- (inst2);
+        \draw[->] (inst2) -- (dots);
+        \draw[->] (cond) -- node[anchor=east] {\texttt{False}} (end);
+        \draw[->] (dots) -| ($(cond.south)+(0.4,0)$);
+      \end{tikzpicture}
+  \end{columns}

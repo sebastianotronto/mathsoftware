@@ -1,0 +1,176 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+
+\usepackage{enumitem}
+\title{Latex Example Live}
+\author{Sebastiano Tronto}
+\date{20-02-2021}
+
+\newcommand{\reals}{\mathbb{R}}
+\DeclareMathOperator{\sinus}{sinus}
+
+
+\newtheorem{mythm}{My Theorem}[section]
+
+\theoremstyle{definition}
+\newtheorem{prop}[mythm]{Proposition}
+\newtheorem{defi}{Definition}
+
+\theoremstyle{remark}
+\newtheorem*{warning}{Achtung}
+
+\usepackage{xcolor}
+
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+
+{\color{pink} Hello, world!
+
+This is a comment}
+
+\texttt{This looks like computer code}
+
+\section{Text}
+
+\textbf{This sentence is in boldface}
+
+\underline{\textit{italicized} maybe in a sentence \textbf{something}}
+
+\underline{\textit{one inside the other}}
+
+\emph{also italicized???}
+
+This is an important sentence, maybe a quote or something, and this \emph{word} is very important. Let's make this sentence longer than one line.
+
+{\Huge Large words}
+
+%\appendix
+
+\section{Math mode}
+
+This is an inline formula \( \displaystyle \sum_i \frac{i}{22} \), it appears within the text
+
+This is a displaystyle formula \[ \textstyle \sum_{\alpha=0}^{2^{10}}   \frac2 \alpha{22} \] it appears on its own line
+
+How sqrt works: \( \sqrt[\phi]{25} \)
+
+
+
+\begin{flalign}
+\label{eq}
+e^x &= \left(\sum_{i=0}^\infty \frac{x^i}{i!} \right) = & \\
+&= \left( 1 + x  + \frac{x^2}2  \right)+ \frac{x^3}{6} + \cdots \nonumber
+\end{flalign}
+
+\[
+   \left\{ x \in \reals \quad \text{such that} \quad \frac{ \sinus(x)}{x^2}>0 \right\}\reals
+\]
+
+\[ \sum_i \]
+
+The first equation we wrote is \eqref{eq}
+
+\section{Environments}
+
+\subsection{Lists}
+\label{subsectionLists}
+
+\begin{itemize}
+	\item One \textbf{item}
+	\item Another \(2+2=4\)
+	\item a third one \[\sum_{i=0}^n\]
+	\item A sublist:
+		\begin{itemize}
+			\item[+] First subitem
+			\item[+] and so on
+		\end{itemize}
+	\item Again in the main list
+\end{itemize}
+
+\begin{enumerate}[label=\Roman*]
+	\item One
+	\item Two
+	\item Actually three
+	\item Three (or not)
+\end{enumerate}
+
+\subsection*{Tables}
+
+Let's write a table:
+
+\vspace{1cm}
+\begin{tabular}{r||l|c}
+\hline
+This is a table & second column & third column \\
+\hline
+Things          & a             & \( 2+2 = 4 \)\\
+\hline
+more things     & b             & c
+\end{tabular}
+
+\vspace{1cm}
+\[
+	\left(\begin{array}{cc}
+		\int_0^1 e^x  &  \frac{2}{25} \\
+		0 & 0 \\
+		1111 & 234\alpha
+	\end{array}\right)
+\]
+
+\[
+	\begin{pmatrix}
+		\int_0^1 e^x  &  \frac{2}{25} \\
+		0 & 0 \\
+		1111 & 234\alpha
+	\end{pmatrix}
+\]
+
+\[
+\begin{pmatrix}
+1 & 2\\
+3 & 4
+\end{pmatrix}
+\overset{L2\rightarrow L2+L3}\longrightarrow
+\begin{pmatrix}
+1 & 2\\
+4 & 6
+\end{pmatrix}
+\]
+
+\section{Last section}
+
+In section \ref{subsectionLists} we saw how to write lists
+
+\begin{mythm}[Gauss]
+The equation \(2+x=4\) is true for \(x=2\).
+\end{mythm}
+
+\begin{prop}
+A less important fact
+\end{prop}
+
+\begin{defi}
+a definition
+\end{defi}
+
+\begin{mythm}
+Another important fact.
+\end{mythm}
+
+\begin{warning}
+It is a common mistake to think that \(2+2=5\)
+\end{warning}
+\[\binom45\]
+
+\[ 2 \nmid 10 \]
+
+\end{document}

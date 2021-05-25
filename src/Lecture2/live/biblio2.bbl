@@ -1,0 +1,18 @@
+\begin{thebibliography}{Knu68}
+
+\bibitem[Knu68]{knuth68}
+Donald Knuth.
+\newblock {\em The Art of Computer Programming}, volume~I.
+\newblock Addison-Wesley, 1968.
+
+\bibitem[Rud62]{rudin}
+Walter Rudin.
+\newblock {\em Fourier analysis on groups}, volume 121967.
+\newblock Wiley Online Library, 1962.
+
+\bibitem[Tro22]{th}
+Tronto.
+\newblock {\em Kummer Theory}.
+\newblock PhD thesis, Uni.lu, 2022.
+
+\end{thebibliography}

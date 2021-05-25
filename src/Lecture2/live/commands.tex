@@ -1,0 +1,27 @@
+\documentclass[10pt,a5paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+
+
+\newcommand{\myvec}[2]{({#1}_1,{#1}_2,\dots,{#1}_{#2})}
+\newcommand{\myvecn}[1]{\myvec{#1}{n}}
+
+\newcommand{\myvecopt}[2][n]{({#2}_1,{#2}_2,\dots,{#2}_{#1})}
+\providecommand{\vec}[1]{\overleftarrow{#1}}
+
+\begin{document}
+
+\[
+	\vec{v}=\myvecopt{v} 
+\]
+
+later...
+
+\[
+	\vec{w}=\myvecopt[10]{w}
+\]
+
+\end{document}

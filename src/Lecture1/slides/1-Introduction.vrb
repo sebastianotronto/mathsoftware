@@ -1,0 +1,14 @@
+\frametitle{Latex - Example}
+An equation like this:
+  \begin{align*}
+    e^x =& \sum_{n=0}^{\infty} \frac{x^n}{n!} \\
+        =& 1 + x + \frac{x^2}{2} + \frac{x^3}{6} + \cdots
+  \end{align*}
+  is written in LaTeX as:
+  \begin{verbatim}
+    \begin{align*}
+      e^x =& \sum_{n=0}^{\infty} \frac{x^n}{n!} \\
+          =& 1 + x + \frac{x^2}{2} +
+             \frac{x^3}{6} + \cdots
+    \end{align*}
+  \end{verbatim}
