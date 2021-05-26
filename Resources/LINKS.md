@@ -25,8 +25,8 @@
 * [SageMath official documentation](https://doc.sagemath.org/)
 * [SageMath tutorial](https://doc.sagemath.org/html/en/tutorial/index.html) -
 	many examples
-* [SageMath reference manual](https://doc.sagemath.org/html/en/reference/index.html)
-	- technical reference
+* [SageMath reference manual](https://doc.sagemath.org/html/en/reference/index.html) -
+	technical reference
 * [SageMath installation instructions](https://doc.sagemath.org/html/en/installation/index.html)
 * [SageMathCell](https://sagecell.sagemath.org/) - try SageMath online
 * [CoCalc](https://cocalc.com/) - cloud-based notebook
