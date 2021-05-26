@@ -40,8 +40,7 @@ computations.
 
 For the first few lectures I have filmed some videos which are a shorter
 version of what explained in class. You can find all of them in
-[this YouTube channel]
-(https://www.youtube.com/channel/UCUPWzPfoW5UJInqZcqGCigg).
+[this YouTube channel](https://www.youtube.com/channel/UCUPWzPfoW5UJInqZcqGCigg).
 
 * [Getting started with LaTeX](https://www.youtube.com/watch?v=HVvQpZEeIDI)
 * [LaTeX bibliography](https://www.youtube.com/watch?v=-KrNY7BXdPo)
