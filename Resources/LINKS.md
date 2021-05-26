@@ -18,6 +18,9 @@
 # SageMath and Python
 
 * [Python official website](https://www.python.org/)
+* [Python shell](https://www.python.org/shell) - try Python online
+* [ProjectEuler](https://projecteuler.net/archives) - test your programming
+	and Math skills with these puzzles
 * [SageMath official website](https://www.sagemath.org/)
 * [SageMath official documentation](https://doc.sagemath.org/)
 * [SageMath tutorial](https://doc.sagemath.org/html/en/tutorial/index.html) -
