@@ -76,7 +76,7 @@ the beginning of the course is enough.
 
 Moreover, you should remove or replace the university logo and my email
 address, which you can replace with your own or with my personal address
-`sebastiano [dot] tronto [at] gmail [dot] com`.
+`sebastiano@tronto.net`.
 
 Below you can find some details on how the course was taught.
 
