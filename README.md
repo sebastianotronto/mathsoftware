@@ -151,8 +151,3 @@ things, without much "real" programming involved, with the exception of
 the second exercise of homework 2. For that one I tried to do something
 "fun", but I am not very satisfied with the result: in the end it was harder
 to understand the problem than how to solve it.
-
-### Final comments
-
-(I will elaborate my comments on the course overall once I receive the
-course evaluation from the students)
